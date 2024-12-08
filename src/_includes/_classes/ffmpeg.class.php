@@ -11,11 +11,11 @@
                 $CRF,
                 $HD,
 
-                // $FFMPEG     = "/usr/bin/ffmpeg",
-                // $FFPROBE    = "/usr/bin/ffprobe";
+                $FFMPEG     = "/usr/bin/ffmpeg",
+                $FFPROBE    = "/usr/bin/ffprobe";
 
-                $FFMPEG     = "C:/ffmpeg/bin/ffmpeg.exe",
-                $FFPROBE    = "C:/ffmpeg/bin/ffprobe.exe";
+                // $FFMPEG     = "C:/ffmpeg/bin/ffmpeg.exe",
+                // $FFPROBE    = "C:/ffmpeg/bin/ffprobe.exe";
 
         public function Get_Length($Echoseconds = NULL){
 

@@ -5,6 +5,7 @@ services:
     container_name: apache-php
     volumes:
       - ./src:/var/www/html:ro 
+      - ./media:/var/www/html/usfi:rw 
       - ./migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     ports:
       - "7890:80"

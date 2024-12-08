@@ -9,7 +9,7 @@ RewriteRule ^user/(\w+)/?$ /profile.php?user=$1 [L,QSA,NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-RewriteRule ^_.*$ - [R=404,L]
+# RewriteRule ^_.*$ - [R=404,L]
 
 ErrorDocument 404 /_templates/_errors/404.php
 ErrorDocument 400 /_templates/_errors/400.html

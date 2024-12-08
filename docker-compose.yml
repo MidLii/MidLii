@@ -16,7 +16,6 @@ services:
     environment:
       - UID=1000
       - GID=1000
-    user: "${UID}:${GID}"
 
   mariadb:
     image: mariadb:latest

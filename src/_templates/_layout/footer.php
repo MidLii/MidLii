@@ -34,5 +34,8 @@
                 <a href="/my_subscriptions">My Subscriptions</a><a href="/my_account">My Account</a>
             </div>
         </div>
+        
     </div>
+    
 </footer>
+

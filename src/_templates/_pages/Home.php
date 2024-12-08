@@ -305,8 +305,7 @@
     </div>
     <div class="whats_new">
         <strong>What's New</strong>
-        <a href="https://github.com/MidLii/MidLii">MidLii</a>
-        Open source VidLii with fixed source code and Docker setup for easy deployment. <a href="https://github.com/MidLii/MidLii">Source code is available here.</a>
+        
         <a href="/<? if ($_USER->logged_in) : ?>channel_version<? else : ?>login<? endif ?>">Cosmic Panda</a>
         The famous 2012 YouTube Channel Layout is now finally on VidLii. Unlike YouTube we won't force it though!
         <a href="/">Awards</a>

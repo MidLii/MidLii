@@ -37,7 +37,6 @@ services:
 
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: vidlii
       MYSQL_DATABASE: vidlii

@@ -3,6 +3,8 @@ FROM php:7.4-apache
 ARG UID=1000
 ARG GID=1000
 
+USER root 
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libmagic-dev \

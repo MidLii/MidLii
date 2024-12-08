@@ -4,8 +4,7 @@ services:
     image: php:7.4-apache
     container_name: apache-php
     volumes:
-      - ./src:/var/www/html/src:ro 
-      - ./media:/var/www/html/media:rw 
+      - ./src:/var/www/html:rw
       - ./migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
       - ./apache/httpd.conf:/etc/apache2/httpd.conf:ro
     ports:
@@ -14,8 +13,8 @@ services:
       - network
     depends_on:
       - mariadb
-    environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html
+    # environment:
+    #   - APACHE_DOCUMENT_ROOT=/var/www/html
 
   mariadb:
     image: mariadb:latest

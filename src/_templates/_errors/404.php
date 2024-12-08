@@ -38,7 +38,7 @@ function video_thumbnail2($URL,$LENGTH,$Width,$Height,$Title = NULL) {
     <? require_once $_SERVER['DOCUMENT_ROOT']."/_templates/_layout/header.php"; ?>
     <div style="width:90%;margin:37px auto 0">
         <div style="width:45%;float:left">
-            <img src="/img/404.png" style="width:344px;position:relative;top:9px">
+            <img src="/img/404.jpg" style="width:344px;position:relative;top:9px">
         </div>
         <div style="float:left;width:55%">
             <div style="font-size:33px;font-weight:bold;text-align:center;color:#404040">404 - Page Not Found</div>

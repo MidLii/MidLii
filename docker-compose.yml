@@ -13,8 +13,10 @@ services:
       - network
     depends_on:
       - mariadb
-    # environment:
-    #   - APACHE_DOCUMENT_ROOT=/var/www/html
+    environment:
+      - UID=1000
+      - GID=1000
+    user: "${UID}:${GID}"
 
   mariadb:
     image: mariadb:latest

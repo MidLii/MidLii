@@ -1,5 +1,6 @@
 services:
   apache-php:
+    build: .
     image: php:7.4-apache
     container_name: apache-php
     volumes:

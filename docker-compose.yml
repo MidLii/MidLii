@@ -29,7 +29,11 @@ services:
       - PROFILE_JS_FILE=/js/profile.js?9
       - COSMIC_JS_FILE=/js/cosmicpanda.js?3
       - MAIN_JS_FILE=/js/main3.js?22
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
 
   mariadb:
     image: mariadb:latest
@@ -41,7 +45,13 @@ services:
       - ./migrations:/docker-entrypoint-initdb.d
     networks:
       - network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
 
+          
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:

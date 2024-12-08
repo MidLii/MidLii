@@ -4,9 +4,10 @@ services:
     image: php:7.4-apache
     container_name: apache-php
     volumes:
-      - ./src:/var/www/html:ro 
-      - ./media:/var/www/html/usfi:rw 
+      - ./src:/var/www/html/src:ro 
+      - ./media:/var/www/html/media:rw 
       - ./migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - ./apache/httpd.conf:/etc/apache2/httpd.conf:ro
     ports:
       - "7890:80"
     networks:

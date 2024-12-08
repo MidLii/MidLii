@@ -16,7 +16,7 @@ define("ADMIN_PASSWORD", "stopwithit");
 define("DB_HOST", "mariadb");
 define("DB_DATABASE", "vidlii");
 define("DB_USER", "root");
-define("DB_PASSWORD", "");
+define("DB_PASSWORD", "vidlii");
 define("DB_CHARSET", "latin1");
 
 

@@ -11,21 +11,21 @@ define("ROOT_FOLDER", $_SERVER["DOCUMENT_ROOT"]);
 define("UPLOAD_LIMIT", 1024 * 1024 * 1024 * 2.01);
 define("ALLOWED_FORMATS", ["FLV", "MP4", "WMV", "AVI", "MOV", "M4V", "MPG", "MPEG", "WEBM", "MOV", "MKV", "3GP"]);
 
-define("ADMIN_PASSWORD", "stopwithit");
+define("ADMIN_PASSWORD", getenv('ADMIN_PASSWORD') ?: "stopwithit");
 
-define("DB_HOST", "mariadb");
-define("DB_DATABASE", "vidlii");
-define("DB_USER", "root");
-define("DB_PASSWORD", "vidlii");
-define("DB_CHARSET", "latin1");
+define("DB_HOST", getenv('DB_HOST') ?: "mariadb");
+define("DB_DATABASE", getenv('DB_DATABASE') ?: "vidlii");
+define("DB_USER", getenv('DB_USER') ?:"root");
+define("DB_PASSWORD", getenv('DB_PASSWORD') ?:"vidlii");
+define("DB_CHARSET", getenv('DB_CHARSET') ?: "latin1");
 
 
-define("CSS_FILE", "/css/m.css?8");
-define("PROFILE_CSS_FILE", "/css/profile.css?5");
-define("COSMIC_CSS_FILE", "/css/cosmicpanda.css?5");
-define("PROFILE_JS_FILE", "/js/profile.js?9");
-define("COSMIC_JS_FILE", "/js/cosmicpanda.js?3");
-define("MAIN_JS_FILE", "/js/main3.js?22");
+define("CSS_FILE", getenv('CSS_FILE') ?: "/css/m.css?8");
+define("PROFILE_CSS_FILE", getenv('PROFILE_CSS_FILE') ?: "/css/profile.css?5");
+define("COSMIC_CSS_FILE", getenv('COSMIC_CSS_FILE') ?: "/css/cosmicpanda.css?5");
+define("PROFILE_JS_FILE", getenv('PROFILE_JS_FILE') ?: "/js/profile.js?9");
+define("COSMIC_JS_FILE", getenv('COSMIC_JS_FILE') ?: "/js/cosmicpanda.js?3");
+define("MAIN_JS_FILE", getenv('MAIN_JS_FILE') ?: "/js/main3.js?22");
 
 //define("CSS_FILE",          "https://www.vidlii.com/css/m.css?8");
 //define("PROFILE_CSS_FILE",  "https://www.vidlii.com/css/profile.css?5");

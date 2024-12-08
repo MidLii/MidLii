@@ -1,8 +1,7 @@
 services:
-  apache-php:
+  web:
     build: .
     image: php:7.4-apache
-    container_name: apache-php
     volumes:
       - ./src:/var/www/html:rw
       - ./migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
@@ -16,6 +15,21 @@ services:
     environment:
       - UID=1000
       - GID=1000
+      - ADMIN_PASSWORD=stopwithit
+      - CJ_USERNAME=vidlii
+      - CJ_PASSWORD=vidlii
+      - DB_HOST=mariadb
+      - DB_DATABASE=vidlii
+      - DB_USER=root
+      - DB_PASSWORD=vidlii
+      - DB_CHARSET=latin1
+      - CSS_FILE=/css/m.css?8
+      - PROFILE_CSS_FILE=/css/profile.css?5
+      - COSMIC_CSS_FILE=/css/cosmicpanda.css?5
+      - PROFILE_JS_FILE=/js/profile.js?9
+      - COSMIC_JS_FILE=/js/cosmicpanda.js?3
+      - MAIN_JS_FILE=/js/main3.js?22
+
 
   mariadb:
     image: mariadb:latest
@@ -30,7 +44,6 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
     environment:
       PMA_HOST: mariadb
       PMA_PORT: 3306

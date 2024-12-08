@@ -2,7 +2,17 @@
 //ini_set('display_errors', 1);
 //	ini_set('display_startup_errors', 1);
 //	error_reporting(E_ALL);
-
+$cj_username= getenv('CJ_USERNAME') ?: "vidlii";
+$cj_password= getenv("CJ_PASSWORD") ?: "vidlii";
+if (!isset($_SERVER['PHP_AUTH_USER'])) {
+    header('WWW-Authenticate: Basic realm="VidLii"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo "stfu";
+    exit;
+} else if("{$cj_username}{$cj_password}" != "{$_SERVER['PHP_AUTH_USER']}{$_SERVER['PHP_AUTH_PW']}") {
+    echo "stfu";
+    exit;
+}
     require_once "../_includes/init.php";
 	set_time_limit(0);
 	$root = "..";

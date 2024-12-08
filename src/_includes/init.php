@@ -13,7 +13,7 @@ define("ALLOWED_FORMATS", ["FLV", "MP4", "WMV", "AVI", "MOV", "M4V", "MPG", "MPE
 
 define("ADMIN_PASSWORD", "stopwithit");
 
-define("DB_HOST", "localhost");
+define("DB_HOST", "mariadb");
 define("DB_DATABASE", "vidlii");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");

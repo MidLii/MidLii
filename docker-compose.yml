@@ -1,0 +1,45 @@
+services:
+  apache-php:
+    image: php:7.4-apache
+    container_name: apache-php
+    volumes:
+      - ./src:/var/www/html:ro 
+      - ./migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    ports:
+      - "7890:80"
+    networks:
+      - network
+    depends_on:
+      - mariadb
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: vidlii
+      MYSQL_DATABASE: vidlii
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d
+    networks:
+      - network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: vidlii
+    ports:
+      - "7891:80"
+    networks:
+      - network
+    depends_on:
+      - mariadb
+
+networks:
+  network:
+    driver: bridge
+

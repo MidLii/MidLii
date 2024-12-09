@@ -192,12 +192,12 @@ if (isset($_POST["submit_register"]) && ctype_alnum($_POST["vl_usernames"])) {
         if (isset($Errors["age"])) {
             $_PAGE->add_error("You must confirm that you're at least 13 years old!");
         }
-        if (isTorRequest()) {
-            $_PAGE->add_error("You cannot create accounts while using TOR!");
-        }
-        if (!isset($_SESSION["deto"]) || isset($_SESSION["beto"])) {
-            $_PAGE->add_error("You cannot create accounts while using TOR!");
-        }
+        // if (isTorRequest()) {
+        //     $_PAGE->add_error("You cannot create accounts while using TOR!");
+        // }
+        // if (!isset($_SESSION["deto"]) || isset($_SESSION["beto"])) {
+        //     $_PAGE->add_error("You cannot create accounts while using TOR!");
+        // }
     }
 }
 

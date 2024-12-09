@@ -7,7 +7,7 @@ precautions, it should only be used for development purposes.
 
 - git clone this repository
 - edit envs in docker-compose.yml file if necessary
-- docker compose up -d
+- docker compose up -d --build
 - service will be exposed at 7890 and phpmyadmin at 7891. do reverse proxy using nginx/caddy/etc if you wanna use a domain
 
 

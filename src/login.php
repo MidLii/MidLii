@@ -79,10 +79,10 @@ if (isset($_POST["submit_login"])) {
     }
 
     // Check whether the request is coming from a Tor IP
-    if ($continue && isTorRequest()) {
-        $_PAGE->add_error("You cannot login while using TOR!");
-        $continue = false;
-    }
+    // if ($continue && isTorRequest()) {
+    //     $_PAGE->add_error("You cannot login while using TOR!");
+    //     $continue = false;
+    // }
 
     // Check captcha result if required
     // modified: bypass captcha check

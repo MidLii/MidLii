@@ -2,8 +2,6 @@ FROM php:7.4-apache
 
 ARG UID
 ARG GID
-ARG CJ_USERNAME
-ARG CJ_PASSWORD
 
 USER root
 

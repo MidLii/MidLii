@@ -105,7 +105,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
 
         if (!$_USER->logged_in) {
 
-            $User = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname LIKE :USERNAME ESCAPE '/'", false, [":USERNAME" => "%$Filtered_Search_Query%"]);
+            $User = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname = :USERNAME AND shadowbanned = 0", true, [":USERNAME" => $Normal_Search_Query]);
 
         } else {
 

@@ -211,4 +211,4 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 //	}
 	
 	die("QUITTING!");
-	exit();
+	// exit();

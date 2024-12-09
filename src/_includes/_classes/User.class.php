@@ -88,7 +88,7 @@
                                 ":BROWSER"  => $Browser
                             ]);
 
-                        setcookie("re", $Code, time() + 90 * 60 * 24 * 100, "/", null, null, true);  //UPDATE THE REMEMBER ME CODE COOKIE
+                        setcookie("re", $Code, time() + 90 * 60 * 24 * 100, "/", null, false, true);  //UPDATE THE REMEMBER ME CODE COOKIE
 
                     } else {
 
@@ -233,7 +233,7 @@
                                          ":CODE"         => $Code,
                                          ":BROWSER"      => $Browser
                                      ]);
-                    setcookie("re", $Code, time() + 90 * 60 * 24 * 100, "/", null, null, true);
+                    setcookie("re", $Code, time() + 90 * 60 * 24 * 100, "/", null, false, true);
                 }
                 return true;
 

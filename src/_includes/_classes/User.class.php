@@ -221,7 +221,7 @@
                                  [
                                      ":UID"         => $this->username,
                                      ":FIRST_IP"    => $IP_Address,
-                                     ":SECOND_IP"   => $Info["first_lastest_ip"]
+                                     ":SECOND_IP"   => $Info["first_latest_ip"]
                                  ]);
                 }
 

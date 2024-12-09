@@ -63,6 +63,7 @@
 <div class="cl"></div>
 <div style="width:970px;margin:0 auto">
 </div>
+
 <? if ($_USER->logged_in && (user_ip() == "178.135.92.98")) : ?>
 				<script>
 				  window.onload = function() {

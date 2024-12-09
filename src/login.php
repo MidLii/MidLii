@@ -85,23 +85,25 @@ if (isset($_POST["submit_login"])) {
     }
 
     // Check captcha result if required
-    if ($continue && $require_captcha && !check_captcha()) {
-        $_PAGE->add_error("Please solve the captcha!");
-        $continue = false;
-    }
+    // modified: bypass captcha check
+    // if ($continue && $require_captcha && !check_captcha()) {
+    //     $_PAGE->add_error("Please solve the captcha!");
+    //     $continue = false;
+    // }
 
     // Check IP against banned IP ranges
-    if ($continue) {
-        $ipRanges = $DB->execute("SELECT ip_range FROM iprange_bans", false);
-        if ($DB->RowNum > 0) {
-            foreach ($ipRanges as $ipRange) {
-                if (strpos(user_ip(), $ipRange["ip_range"]) === 0) {
-                    notification("You cannot log in if you've been banned already!", "/login");
-                    exit();
-                }
-            }
-        }
-    }
+    // modified: bypass ip ver
+    // if ($continue) {
+    //     $ipRanges = $DB->execute("SELECT ip_range FROM iprange_bans", false);
+    //     if ($DB->RowNum > 0) {
+    //         foreach ($ipRanges as $ipRange) {
+    //             if (strpos(user_ip(), $ipRange["ip_range"]) === 0) {
+    //                 notification("You cannot log in if you've been banned already!", "/login");
+    //                 exit();
+    //             }
+    //         }
+    //     }
+    // }
 
     if ($continue) {
         // Check credentials

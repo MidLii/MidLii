@@ -7,7 +7,6 @@
 	<?php
 		$Has_Adblock = false;
 		
-		//if (!$_USER->logged_in || (strtolower($_USER->username) != "bloxed" && user_ip() != "85.29.252.14")) {
 		//if ($_USER->logged_in && $_USER->username == "VidLii") {
 			$Check = $DB->execute("SELECT submit_date FROM badboys WHERE ip = :IP AND submit_date > NOW() - INTERVAL 1 MINUTE", true, [":IP" => user_ip()]);
 			//if ($Check || isTorRequest() || (isset($_SERVER["HTTP_CF_IPCOUNTRY"]) && $_SERVER["HTTP_CF_IPCOUNTRY"] == "MA")) {

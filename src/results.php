@@ -7,7 +7,8 @@ if (isset($_GET["f"]) && $_GET["f"] == "All") { unset($_GET["f"]); }
 if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
     $_PAGINATION = new Pagination(15,10);
     $Filtered_Search_Query = str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $_GET["q"]);
-    $Normal_Search_Query = trim($_GET["q"]);
+    $Normal_Search_Query = trim(htmlspecialchars($_GET["q"], ENT_QUOTES, 'UTF-8'));
+
 
     if (isset($_GET["f"])) {
         if ($_GET["f"] == 1) {
@@ -104,7 +105,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
 
         if (!$_USER->logged_in) {
 
-            $User = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname = :USERNAME AND shadowbanned = 0", true, [":USERNAME" => $Normal_Search_Query]);
+            $User = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname LIKE :USERNAME ESCAPE '/'", false, [":USERNAME" => "%$Filtered_Search_Query%"]);
 
         } else {
 

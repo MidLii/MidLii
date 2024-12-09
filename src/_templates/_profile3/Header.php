@@ -66,7 +66,7 @@
                 <a href="/"><img src="/<?= $LOGO_VALUE ?>" alt="VidLii" title="VidLii - Display Yourself."></a>
                 <div class="s_search">
                     <form action="/results" method="GET">
-                        <input type="search" name="q" maxlength="256" <? if ($_PAGE->Current_Page !== "login" && $_PAGE->Current_Page !== "register" && !isset($_GET["q"])) : ?>autofocus<? elseif (isset($_GET["q"])) : ?> value="<?= $_GET["q"] ?>"<? endif ?>><input type="submit" value="Search">
+                        <input type="search" name="q" maxlength="256" <? if ($_PAGE->Current_Page !== "login" && $_PAGE->Current_Page !== "register" && !isset($_GET["q"])) : ?>autofocus<? elseif (isset($_GET["q"])) : ?> value="<?= htmlspecialchars($_GET["q"]) ?>"<? endif ?>><input type="submit" value="Search">
                     </form>
                 </div>
                 <a href="javascript:void(0)" class="s_a" onclick="$('#s_toggle2').toggleClass('hddn')">
@@ -253,7 +253,7 @@
     <? if ($Profile["c_videos"] && $Profile["videos"] > 0) : ?>
     <form action="/user/<?= $Profile["displayname"] ?>/videos" method="POST">
         <div class="cosmic_search">
-            <input type="search" name="q" maxlength="64" placeholder="Search Channel"<? if (isset($_POST["q"])) : ?> value="<?= $_POST["q"] ?>"<? endif ?>><button type="submit"><b>Search</b></button>
+            <input type="search" name="q" maxlength="64" placeholder="Search Channel"<? if (isset($_POST["q"])) : ?> value="<?= htmlspecialchars($_POST["q"]) ?>"<? endif ?>><button type="submit"><b>Search</b></button>
         </div>
     </form>
     <? endif ?>

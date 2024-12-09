@@ -29,22 +29,22 @@
                 <strong style="font-size:18px">Videos</strong>
                 <form action="/admin/videos" method="GET" style="display:inline-block" onchange="(this).submit()">
                     <? if (isset($_GET["search"])) : ?>
-                        <input type="hidden" name="search" value="<?= $_GET["search"] ?>">
+                        <input type="hidden" name="search" value="<?= htmlspecialchars($_GET["search"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["ti"])) : ?>
-                        <input type="hidden" name="ti" value="<?= $_GET["ti"] ?>">
+                        <input type="hidden" name="ti" value="<?= htmlspecialchars($_GET["ti"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["da"])) : ?>
-                        <input type="hidden" name="da" value="<?= $_GET["da"] ?>">
+                        <input type="hidden" name="da" value="<?= htmlspecialchars($_GET["da"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["vi"])) : ?>
-                        <input type="hidden" name="vi" value="<?= $_GET["vi"] ?>">
+                        <input type="hidden" name="vi" value="<?= htmlspecialchars($_GET["vi"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["co"])) : ?>
-                        <input type="hidden" name="co" value="<?= $_GET["co"] ?>">
+                        <input type="hidden" name="co" value="<?= htmlspecialchars($_GET["co"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["ra"])) : ?>
-                        <input type="hidden" name="ra" value="<?= $_GET["ra"] ?>">
+                        <input type="hidden" name="ra" value="<?= htmlspecialchars($_GET["ra"]) ?>">
                     <? endif ?>
                     <select name="n" style="padding:1px;position:relative;bottom:2px;left:6px">
                         <option value="16"<? if (isset($_GET["n"]) && $_GET["n"] == 16) : ?> selected<? endif ?>>16</option>
@@ -59,22 +59,22 @@
             <div style="float:right">
                 <form action="/admin/videos" method="GET">
                     <? if (isset($_GET["n"])) : ?>
-                    <input type="hidden" name="n" value="<?= $_GET["n"] ?>">
+                    <input type="hidden" name="n" value="<?= htmlspecialchars($_GET["n"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["ti"])) : ?>
-                        <input type="hidden" name="ti" value="<?= $_GET["ti"] ?>">
+                        <input type="hidden" name="ti" value="<?= htmlspecialchars($_GET["ti"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["da"])) : ?>
-                        <input type="hidden" name="da" value="<?= $_GET["da"] ?>">
+                        <input type="hidden" name="da" value="<?= htmlspecialchars($_GET["da"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["vi"])) : ?>
-                        <input type="hidden" name="vi" value="<?= $_GET["vi"] ?>">
+                        <input type="hidden" name="vi" value="<?= htmlspecialchars($_GET["vi"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["co"])) : ?>
-                        <input type="hidden" name="co" value="<?= $_GET["co"] ?>">
+                        <input type="hidden" name="co" value="<?= htmlspecialchars($_GET["co"]) ?>">
                     <? endif ?>
                     <? if (isset($_GET["ra"])) : ?>
-                        <input type="hidden" name="ra" value="<?= $_GET["ra"] ?>">
+                        <input type="hidden" name="ra" value="<?= htmlspecialchars($_GET["ra"]) ?>">
                     <? endif ?>
                     <input type="search" name="search"<? if (isset($_GET["search"])) : ?> value="<?= htmlspecialchars($_GET["search"], ENT_QUOTES) ?>"<? endif ?> maxlength="128" style="width:255px" placeholder="Search Videos..." required> <input type="submit" value="Search">
                 </form>

@@ -9,7 +9,7 @@
             </select>
         </div>
         <div style="float: right">
-            <select style="padding: 6px 14px; font-size: 15px" onchange="window.location = '/analytics?time='+this.value<? if (isset($_GET["page"])) : ?>+'&page=<?= $_GET["page"] ?><? if (isset($_GET["type"])) : ?>&type=<?= $_GET["type"] ?><? endif ?><? if (isset($_GET["country"])) : ?>&country=<?= $_GET["country"] ?><? endif ?><? if (isset($_GET["video"])) : ?>&video=<?= $_GET["video"] ?><? endif ?>'<? endif ?>">
+            <select style="padding: 6px 14px; font-size: 15px" onchange="window.location = '/analytics?time='+this.value<? if (isset($_GET["page"])) : ?>+'&page=<?= urlencode($_GET["page"]) ?><? if (isset($_GET["type"])) : ?>&type=<?= urlencode($_GET["type"]) ?><? endif ?><? if (isset($_GET["country"])) : ?>&country=<?= urlencode($_GET["country"]) ?><? endif ?><? if (isset($_GET["video"])) : ?>&video=<?= urlencode($_GET["video"]) ?><? endif ?>'<? endif ?>">
                 <option value="0"<? if (isset($_GET["time"]) && $_GET["time"] == 0) : ?> selected<? endif ?>>All Time</option>
                 <option value="3"<? if (isset($_GET["time"]) && $_GET["time"] == 3) : ?> selected<? endif ?>>This Year</option>
                 <option value="1"<? if (isset($_GET["time"]) && $_GET["time"] == 1) : ?> selected<? endif ?>>This Month</option>
@@ -45,7 +45,7 @@
                 <div style="position: relative; top: 4px; border-left: 1px solid #ccc;float:right; padding:0 10px"><?= number_format($Subscriber["amount"]) ?></div>
             </div>
             <? endforeach ?>
-            <? if (count($Subscribers) > 0) : ?><div style="text-align:center;margin-top:5px"><a href="/analytics?page=subscribers<? if (isset($_GET["time"])) : ?>&time=<?= $_GET["time"] ?><? endif ?>">Show All</a></div><? endif ?>
+            <? if (count($Subscribers) > 0) : ?><div style="text-align:center;margin-top:5px"><a href="/analytics?page=subscribers<? if (isset($_GET["time"])) : ?>&time=<?= urlencode($_GET["time"]) ?><? endif ?>">Show All</a></div><? endif ?>
             <? else : ?>
                 <div style="text-align:center;padding: 25px 0">No Subscribers found</div>
             <? endif ?>

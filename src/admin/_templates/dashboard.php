@@ -112,12 +112,12 @@
 		<strong>Channel Comments</strong>
 		<div style="padding-bottom:7px;margin-bottom:7px;border-bottom: 1px solid #cccccc;text-align:center">
 			<form action="/admin/dashboard" method="POST">
-				<input type="text" name="search_string"<? if (isset($_POST["search_string"])) : ?> value="<?= $_POST["search_string"] ?>" <? endif ?>maxlength="64" placeholder="Search" style="width:300px"> <input type="submit" class="search_button" name="search_submit" value="Submit">
+				<input type="text" name="search_string"<? if (isset($_POST["search_string"])) : ?> value="<?= htmlspecialchars($_POST["search_string"]) ?>" <? endif ?>maxlength="64" placeholder="Search" style="width:300px"> <input type="submit" class="search_button" name="search_submit" value="Submit">
 			</form>
 		</div>
 		<? foreach ($Channel_Comments as $Channel_Comment) : ?>
 			<div style="font-weight:bold"><a href="/user/<?= $Channel_Comment["by_user"] ?>"><?= $Channel_Comment["displayname"] ?></a> wrote on <a href="/user/<?= $Channel_Comment["on_channel"] ?>"><?= $Channel_Comment["on_channel"] ?>s</a> channel:</div>
-			<div style="font-size:13px"><? if (isset($_POST["search_string"])) : ?><?= str_replace($_POST["search_string"],"<strong>".$_POST['search_string']."</strong>",$Channel_Comment["comment"]) ?><? else : ?><?= $Channel_Comment["comment"] ?><? endif ?></div>
+			<div style="font-size:13px"><? if (isset($_POST["search_string"])) : ?><?= str_replace($_POST["search_string"],"<strong>".htmlspecialchars($_POST["search_string"])."</strong>",$Channel_Comment["comment"]) ?><? else : ?><?= $Channel_Comment["comment"] ?><? endif ?></div>
 			<div style="margin-bottom:10px"><?= get_time_ago($Channel_Comment["date"]) ?></div>
 		<? endforeach ?>
 	</div>

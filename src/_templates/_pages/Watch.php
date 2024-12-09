@@ -26,7 +26,7 @@
 		},
 		ended: function() {
 			<? if (isset($NextVideo) && isset($Playlist_Videos[$NextVideo])) : ?>
-				window.location = '/watch?v=<?= $Playlist_Videos[$NextVideo]["url"] ?>&pl=<?= $_GET["pl"] ?>';
+				window.location = '/watch?v=<?= $Playlist_Videos[$NextVideo]["url"] ?>&pl=<?= urlencode($_GET["pl"]) ?>';
 			<? endif ?>
 		}
 	};
@@ -79,7 +79,7 @@
                 <video id="noscript-player-video" src="/usfi/v/<?= $URL ?>.<?= $FILENAME ?><?= ($ISHD and $HD_Enabled) ? ".720" : "" ?>.mp4" controls autoplay></video>
                 <? if($ISHD): ?>
                     <form action="" method="GET" id="noscript-player-hd">
-                        <input type="hidden" name="v" value="<?= $_GET["v"] ?>">
+                        <input type="hidden" name="v" value="<?= htmlspecialchars($_GET["v"]) ?>">
                         <input type="hidden" name="hd" value="<?= (int) (!$HD_Enabled) ?>">
                         <? if($HD_Enabled): ?>
                             <input type="submit" value="Switch to SD" id="noscript-player-hd-button">

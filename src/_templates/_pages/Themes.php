@@ -118,16 +118,16 @@
             <textarea style="width:99.5%" rows="10" readonly><?= file_get_contents("/usfi/css/".$_GET["t"].".css") ?></textarea>
            <div style="text-align:center">
             <? if ($Theme["accepted"] == 0) : ?>
-            <a href="/themes?accept=<?= $_GET["t"] ?>">Accept Theme</a> |
+            <a href="/themes?accept=<?= urlencode($_GET["t"]) ?>">Accept Theme</a> |
             <? endif ?>
-            <a href="/themes?delete=<?= $_GET["t"] ?>" onclick="if (!confirm('Are you sure you want to remove this theme?')) { return false; }">Remove Theme</a>
+            <a href="/themes?delete=<?= urlencode($_GET["t"]) ?>" onclick="if (!confirm('Are you sure you want to remove this theme?')) { return false; }">Remove Theme</a>
            </div>
        </div>
     <? endif ?>
     <? if ($_USER->logged_in && $_USER->Is_Mod == false && $_USER->Is_Admin == false && $_USER->username == $Theme["owner"]) : ?>
         <div style="margin-top:52px">
             <div style="text-align:center">
-                <a href="/themes?delete=<?= $_GET["t"] ?>" onclick="if (!confirm('Are you sure you want to remove this theme?')) { return false; }">Remove Theme</a>
+                <a href="/themes?delete=<?= urlencode($_GET["t"]) ?>" onclick="if (!confirm('Are you sure you want to remove this theme?')) { return false; }">Remove Theme</a>
             </div>
         </div>
     <? endif ?>

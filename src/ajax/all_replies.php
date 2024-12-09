@@ -42,11 +42,11 @@ $Uploaded_By = $DB->execute("SELECT uploaded_by FROM videos WHERE url = :URL", t
         $Rated = 2;
     }
     ?>
-    <div class="wt_c_sct wt_r_sct<? if ($Comment["rating"] < -4) : ?> op_c<? endif ?>" id="wt_<?= $Comment["id"] ?>" op="<?= $_POST["comment_id"] ?>" data-op-user="<?= $Comment["by_user"] ?>">
+    <div class="wt_c_sct wt_r_sct<? if ($Comment["rating"] < -4) : ?> op_c<? endif ?>" id="wt_<?= $Comment["id"] ?>" op="<?= (int)$_POST["comment_id"] ?>" data-op-user="<?= $Comment["by_user"] ?>">
         <div<? if ($Uploaded_By == $Comment["by_user"]) : ?> style="background:#fffcc2"<? elseif ("VidLii" == $Comment["by_user"]) : ?> style="background:#d2ebff"<? endif ?>>
             <a href="/user/<?= $Comment["displayname"] ?>"><?= $Comment["displayname"] ?></a> <span>(<?= get_time_ago($Comment["date_sent"]) ?>)</span>
             <div>
-                <? if ($_USER->logged_in) : ?><a href="javascript:void(0)" onclick="show_reply(<?= $_POST["comment_id"] ?>,false,'<?= $Comment["displayname"] ?>')">Reply</a><? endif ?><? if ($_USER->logged_in && ($Uploaded_By == $_USER->username || $Comment["by_user"] == $_USER->username || $_USER->Is_Admin || $_USER->Is_Mod)) : ?><a href="javascript:void(0)" onclick="delete_wtc(<?= $Comment["id"] ?>)" style="padding-left:9px;margin-left:9px;border-left:1px solid #7d7d7d">Delete</a><? endif ?>
+                <? if ($_USER->logged_in) : ?><a href="javascript:void(0)" onclick="show_reply(<?= (int)$_POST["comment_id"] ?>,false,'<?= $Comment["displayname"] ?>')">Reply</a><? endif ?><? if ($_USER->logged_in && ($Uploaded_By == $_USER->username || $Comment["by_user"] == $_USER->username || $_USER->Is_Admin || $_USER->Is_Mod)) : ?><a href="javascript:void(0)" onclick="delete_wtc(<?= $Comment["id"] ?>)" style="padding-left:9px;margin-left:9px;border-left:1px solid #7d7d7d">Delete</a><? endif ?>
             </div>
         </div>
         <div>

@@ -49,7 +49,7 @@ if ($_POST["type"] == "videos") {
 
 
 
-    if ((10 * ($Page + 1)) < $Videos_Amount) { $Show_More = '<button type="button" id="show_more" onclick="show_more(\'videos\','.($Page + 1).',\''.$User.'\')" class="cosmic_button" style="width:100%">Load 10 more videos</button>'; } else { $Show_More = ""; }
+    if ((10 * ($Page + 1)) < $Videos_Amount) { $Show_More = '<button type="button" id="show_more" onclick="show_more(\'videos\','.($Page + 1).',\''.urlencode($User).'\')" class="cosmic_button" style="width:100%">Load 10 more videos</button>'; } else { $Show_More = ""; }
 
     ?>
     <? foreach ($Videos as $Video) : ?>
@@ -104,7 +104,7 @@ if ($_POST["type"] == "videos") {
     }
 
 
-    if ((10 * ($Page + 1)) < $Videos_Amount) { $Show_More = '<button type="button" id="show_more" onclick="show_more(\'favorites\','.($Page + 1).',\''.$User.'\')" class="cosmic_button" style="width:100%">Load 10 more videos</button>'; } else { $Show_More = ""; }
+    if ((10 * ($Page + 1)) < $Videos_Amount) { $Show_More = '<button type="button" id="show_more" onclick="show_more(\'favorites\','.($Page + 1).',\''.urlencode($User).'\')" class="cosmic_button" style="width:100%">Load 10 more videos</button>'; } else { $Show_More = ""; }
 
 
     ?>
@@ -135,12 +135,12 @@ if ($_POST["type"] == "videos") {
                 $Avatar = "/usfi/thmp/$Avatar.jpg";
             }
         }
-        return '<div href="/user/'.$User.'"><img src="'.$Avatar.'" width="'.$Width.'" height="'.$Height.'" class="avt2 '.$Extra_Class.'" alt="'.$User.'"></div>';
+        return '<div href="/user/'.urlencode($User).'"><img src="'.$Avatar.'" width="'.$Width.'" height="'.$Height.'" class="avt2 '.$Extra_Class.'" alt="'.urlencode($User).'"></div>';
     }
     $From = ($Page * 20);
 
     $Channel_Comments = $DB->execute("SELECT channel_comments.*, users.avatar FROM channel_comments INNER JOIN users ON channel_comments.by_user = users.username WHERE channel_comments.on_channel = :OWNER ORDER BY channel_comments.date DESC LIMIT $From, 20", false, [":OWNER" => $User]);
-    if ((20 * ($Page + 1)) < $Channel_Info["channel_comments"]) { $Show_More = '<button type="button" id="show_more_comments" onclick="show_more_comments('.($Page + 1).',\''.$User.'\')" class="cosmic_button" style="width:100%">Load 20 more comments</button>'; } else { $Show_More = ""; }
+    if ((20 * ($Page + 1)) < $Channel_Info["channel_comments"]) { $Show_More = '<button type="button" id="show_more_comments" onclick="show_more_comments('.($Page + 1).',\''.urlencode($User).'\')" class="cosmic_button" style="width:100%">Load 20 more comments</button>'; } else { $Show_More = ""; }
     ?>
     <? foreach ($Channel_Comments as $Channel_Comment) : ?>
         <div class="cosmic_comment" id="cc_<?= $Channel_Comment["id"] ?>">

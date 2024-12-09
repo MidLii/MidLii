@@ -1,15 +1,16 @@
 RewriteEngine On
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^user/(\w+)/(\w+)/?$ /profile.php?user=$1&page=$2 [L,QSA,NC]
-
 RewriteRule ^user/(\w+)/?$ /profile.php?user=$1 [L,QSA,NC]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 RewriteCond %{REQUEST_URI} !^/_crons
+RewriteCond %{REQUEST_URI} !^/(_templates/_errors/.*)$
 RewriteRule ^_.*$ - [R=404,L]
 
 RewriteRule ^cache/ - [R=404,L]

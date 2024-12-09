@@ -1,6 +1,11 @@
 services:
   web:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: 1000
+        GID: 1000
     image: php:7.4-apache
     volumes:
       - ./src:/var/www/html:rw
@@ -13,9 +18,6 @@ services:
     depends_on:
       - mariadb
     environment:
-      - UID=1000
-      - GID=1000
-      - ADMIN_PASSWORD=stopwithit
       - CJ_USERNAME=vidlii
       - CJ_PASSWORD=vidlii
       - DB_HOST=mariadb
@@ -29,12 +31,22 @@ services:
       - PROFILE_JS_FILE=/js/profile.js?9
       - COSMIC_JS_FILE=/js/cosmicpanda.js?3
       - MAIN_JS_FILE=/js/main3.js?22
+      - ADMIN_PASSWORD=stopwithit
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '1'
           memory: 1G
-
+  converter:
+    build: 
+      context: converter/.
+      args:
+        CJ_USERNAME: vidlii
+        CJ_PASSWORD: vidlii
+    networks:
+      - network
+    depends_on:
+      - web
   mariadb:
     image: mariadb:latest
     environment:

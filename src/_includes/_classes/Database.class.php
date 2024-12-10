@@ -28,8 +28,8 @@
                     $Query->bindParam($paramName, $paramValue, PDO::PARAM_STR);
                 }
                 // die($Query->queryString);
-                // $Query->execute();
-            	$Query->execute($Execute);
+                $Query->execute();
+            	// $Query->execute($Execute);
             } catch (Exception $e) {
                 $Query = $this->Connection->prepare($SQL);
 

@@ -7,7 +7,7 @@ if (isset($_GET["f"]) && $_GET["f"] == "All") { unset($_GET["f"]); }
 if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
     $_PAGINATION = new Pagination(15,10);
     $Filtered_Search_Query = str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $_GET["q"]);
-    $Normal_Search_Query = trim(htmlspecialchars($Filtered_Search_Query, ENT_QUOTES, 'UTF-8'));
+    $Normal_Search_Query = trim($Filtered_Search_Query);
 
     if (isset($_GET["f"])) {
         if ($_GET["f"] == 1) {
@@ -50,9 +50,25 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
 
         } elseif ($_GET["f"] == 2) {
             $Page_Type = "Channels";
-            $Channels = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname LIKE :USERNAME AND shadowbanned = 0 LIMIT $_PAGINATION->From, $_PAGINATION->To", false, [":USERNAME" => "%$Filtered_Search_Query%"]);
+            $Channels = $DB->execute(
+                "SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description 
+                FROM users 
+                WHERE displayname LIKE :USERNAME 
+                AND shadowbanned = 0 
+                LIMIT :from, :to", 
+                false, 
+                [":USERNAME" => "%$Filtered_Search_Query%", ":from" => $_PAGINATION->From, ":to" => $_PAGINATION->To]
+            );
 
-            $Total = $DB->execute("SELECT COUNT(username) AS amount FROM users WHERE shadowbanned = 0 AND displayname LIKE :USERNAME ESCAPE '/'", true, [":USERNAME" => "%$Filtered_Search_Query%"])["amount"];
+            $Total = $DB->execute(
+                "SELECT COUNT(username) AS amount 
+                FROM users 
+                WHERE shadowbanned = 0 
+                AND displayname LIKE :USERNAME ESCAPE '/'", 
+                true, 
+                [":USERNAME" => "%$Filtered_Search_Query%"]
+            );
+
             if ($Total == 0) {
                 notification("No Results!","/"); exit();
             }

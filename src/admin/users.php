@@ -40,7 +40,7 @@
 									~ VidLii
 									";
 
-						$DB->modify("INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES ('VidLii',:USERNAME,:MESSAGE,'Partnership',NOW())",
+						$DB->modify("INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES ('admin',:USERNAME,:MESSAGE,'Partnership',NOW())",
                                    [
                                        ":USERNAME"  => $_GET["a"],
                                        ":MESSAGE"   => $Message
@@ -99,7 +99,7 @@
 									~ VidLii (".$_USER->displayname.")
 									";
                 }
-                $DB->modify("INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES ('VidLii',:USERNAME,:MESSAGE,'Partnership denied',NOW())",
+                $DB->modify("INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES ('admin',:USERNAME,:MESSAGE,'Partnership denied',NOW())",
                            [
                                ":USERNAME"  => $_GET["n"],
                                ":MESSAGE"   => $Message

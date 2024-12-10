@@ -90,7 +90,9 @@ if (isset($_POST["update_info"]) || $ajaxCall) {
 					if ($Has_Custom_Thumbnail) {
 						rename("usfi/$DIR/$URL.jpg", "usfi/$DIR/$URL.temp.jpg");
 					} else {
-						rename("usfi/$DIR/$URL.jpg","usfi/$DIR/".$URL."_.jpg");					
+						if (file_exists("usfi/$DIR/$URL.jpg")) {
+							rename("usfi/$DIR/$URL.jpg","usfi/$DIR/".$URL."_.jpg");					
+						}
 					}
 
 					$Uploader = new Upload($_FILES["c_thmp_uploader"]);

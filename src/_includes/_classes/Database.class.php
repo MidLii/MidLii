@@ -18,11 +18,17 @@
                 die("<center>Database Error</center>");
             }
         }
-
+        
         public function execute(string $SQL, bool $Single = false, array $Execute = []): array {
 			try {
             	$Query = $this->Connection->prepare($SQL);
-            	$Query->execute($Execute);
+
+                // this might break
+                foreach ($Execute as $paramName => $paramValue) {
+                    $Query->bindParam($paramName, $paramValue, PDO::PARAM_STR);
+                }
+                $Query->execute();
+            	// $Query->execute($Execute);
             } catch (Exception $e) {die($e);}
 
             $this->RowNum = $Query->rowCount();

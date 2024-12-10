@@ -2,8 +2,8 @@
 
 
 require_once "_includes/init.php";
+require_once "_includes/_classes/Upload.class.php";
 
-use Upload;
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login

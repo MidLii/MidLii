@@ -129,11 +129,11 @@ if (isset($_POST["update_avatar"]) || isset($_POST["delete_avatar"])) {
             $Uploader->image_x                 = 150;
             $Uploader->image_y                 = 150;
             $Uploader->image_background_color  = '#000000';
-            // $Uploader->image_convert           = 'jpg';
+            $Uploader->image_convert           = 'jpg';
             $Uploader->image_ratio_fill        = false;
 			/* Why would you set a file size limit? We're already resizing to a 150x150 JPG */
-//            $Uploader->file_max_size           = 750000;
-            // $Uploader->jpeg_quality            = 55;
+            $Uploader->file_max_size           = 750000;
+            $Uploader->jpeg_quality            = 55;
             $Uploader->allowed                 = array('image/jpeg','image/pjpeg','image/png','image/gif','image/bmp','image/x-windows-bmp');
             $Uploader->process("usfi/avt/");
             if ($Uploader->processed) {

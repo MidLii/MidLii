@@ -1,4 +1,5 @@
 <?php
+
 require_once "_includes/init.php";
 
 //REQUIREMENTS / PERMISSIONS
@@ -118,7 +119,7 @@ if (isset($_POST["update_avatar"]) || isset($_POST["delete_avatar"])) {
     if ($Validation) {
         if (!empty($_FILES["avatar_upload"]["name"])) {
             $URL = random_string("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",11);
-            $Uploader                          = new upload($_FILES["avatar_upload"]);
+            $Uploader                          = new Upload($_FILES["avatar_upload"]);
             $Uploader->file_new_name_body      = $URL;
             $Uploader->image_resize            = true;
             $Uploader->file_overwrite          = true;
@@ -186,7 +187,7 @@ if (isset($_POST["update_avatar"]) || isset($_POST["delete_avatar"])) {
 
 if (isset($_POST["Apply_Filter"]) && $_POST["filter_type"] !== "0") {
     $URL = random_string("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",11);
-    $Uploader = new upload("usfi/avt/$Avatar_FURL.jpg");
+    $Uploader = new Upload("usfi/avt/$Avatar_FURL.jpg");
     $Uploader->file_overwrite          = true;
     if ($_POST["filter_type"] == "1") {
         $Uploader->image_greyscale  = true;

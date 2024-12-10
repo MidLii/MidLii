@@ -21,7 +21,7 @@
 
 function video_thumbnail2($URL,$LENGTH,$Width,$Height,$Title = NULL) {
     if (!empty($LENGTH) || $LENGTH == "0") { $Length = seconds_to_time((int)$LENGTH); } else { $Length = $LENGTH; }
-    if (file_exists($_SERVER['DOCUMENT_ROOT']."/usfi/thmp/$URL.jpg")) { $Thumbnail = "../usfi/thmp/$URL.jpg"; } else { $Thumbnail = "/img/no_th.jpg"; }
+    if (file_exists($_SERVER['DOCUMENT_ROOT']."/usfi/thmp/$URL.jpg")) { $Thumbnail = "/usfi/thmp/$URL.jpg"; } else { $Thumbnail = "/img/no_th.jpg"; }
 
     return '<div class="th"><div class="th_t">'.$Length.'</div><a href="/watch?v='.$URL.'"><img class="vid_th" src="'.$Thumbnail.'" width="'.$Width.'" height="'.$Height.'"></a></div>';
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Verot\Upload\Upload;
+
 require_once "_includes/init.php";
 
 //REQUIREMENTS / PERMISSIONS

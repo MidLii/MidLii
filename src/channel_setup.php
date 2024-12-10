@@ -1,8 +1,9 @@
 <?php
 
-use Verot\Upload\Upload;
 
 require_once "_includes/init.php";
+
+use Upload;
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login

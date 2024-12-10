@@ -19,8 +19,8 @@ RUN apt-get update && \
 
 RUN a2enmod rewrite
 
-RUN addgroup --gid $GID midlii && \
-    adduser --uid $UID --gid $GID --disabled-password --gecos "" midlii && \
+RUN getent group midlii || addgroup --gid $GID midlii && \
+    id -u midlii || adduser --uid $UID --gid $GID --disabled-password --gecos "" midlii && \
     chown -R $UID:$GID /var/www/html /var/log/apache2 /var/www
 
 RUN sed -i 's/^User .*/User midlii/' /etc/apache2/apache2.conf && \

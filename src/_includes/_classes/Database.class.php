@@ -37,8 +37,7 @@
                 foreach ($Execute as $paramName => $paramValue) {
                     $Query->bindParam($paramName, $paramValue, PDO::PARAM_STR);
                 }
-                die($Query->queryString);
-                die($e);
+                die("$e\n$Query->queryString");
             }
 
             $this->RowNum = $Query->rowCount();

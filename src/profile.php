@@ -537,11 +537,11 @@ if (isset($_GET["user"])) {
                 $Folder = "";
             }
 
-            if (empty($Folder)) {
-                $Avatar = "/img/no.png";
-            } else {
+            // if (empty($Folder)) {
+            //     $Avatar = "/img/no.png";
+            // } else {
                 $Avatar = "/usfi/$Folder/$Avatar.jpg";
-            }
+            // }
 
             $Channel_Types = array(
                 0 => "",

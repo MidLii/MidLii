@@ -17,7 +17,7 @@
             } else {
                 if (isset($_FILES["logo_file"])) {
                     $ID = random_string("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",4);
-                    $Uploader = new upload($_FILES["logo_file"]);
+                    $Uploader = new Upload($_FILES["logo_file"]);
                     $Uploader->file_new_name_body      = $ID;
                     $Uploader->image_resize            = true;
                     $Uploader->file_overwrite          = true;

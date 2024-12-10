@@ -39,7 +39,7 @@ if (isset($_POST["update_adsense"])) {
 if (isset($_POST["channel_banner_action"])) {
 	switch($_POST["channel_banner_action"]) {
 		case "upload": // Upload
-			$Uploader = new upload($_FILES["channel_page_banner"]);
+			$Uploader = new Upload($_FILES["channel_page_banner"]);
 			$Uploader->file_new_name_body = $_USER->username;
 			$Uploader->image_resize = true;
 			$Uploader->file_overwrite          = true;
@@ -105,7 +105,7 @@ if (isset($_POST["channel_banner_action"])) {
 }
 
 if (isset($_POST["submit"])) {
-    $Uploader = new upload($_FILES["watch_page_banner"]);
+    $Uploader = new Upload($_FILES["watch_page_banner"]);
     $Uploader->file_new_name_body = $_USER->username;
     $Uploader->image_resize = true;
     $Uploader->file_overwrite          = true;

@@ -151,7 +151,7 @@
 					$HEI = 480;
 				}
 				
-				$Uploader = new upload($Output);
+				$Uploader = new Upload($Output);
 				$Uploader->file_new_name_body = $URL;
 				$Uploader->image_resize = true;
 				$Uploader->file_overwrite          = true;

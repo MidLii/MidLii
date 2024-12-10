@@ -93,7 +93,7 @@ if (isset($_POST["update_info"]) || $ajaxCall) {
 						rename("usfi/$DIR/$URL.jpg","usfi/$DIR/".$URL."_.jpg");					
 					}
 
-					$Uploader = new upload($_FILES["c_thmp_uploader"]);
+					$Uploader = new Upload($_FILES["c_thmp_uploader"]);
 					$Uploader->file_new_name_body = $URL;
 					$Uploader->image_resize = true;
 					$Uploader->file_overwrite          = true;

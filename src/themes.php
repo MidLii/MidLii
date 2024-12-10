@@ -56,7 +56,7 @@ if (isset($_POST["upload_theme"]) && $_USER->logged_in) {
 				notification("The CSS File must be under 25KB!","/themes?upload","red"); exit();
 			}
 			
-			$Uploader = new upload($_FILES["main_picture"]);
+			$Uploader = new Upload($_FILES["main_picture"]);
 			$Uploader->file_new_name_body = $URL."_1";
 			$Uploader->image_resize = true;
 			$Uploader->file_overwrite          = true;
@@ -74,7 +74,7 @@ if (isset($_POST["upload_theme"]) && $_USER->logged_in) {
                 notification("Something went wrong!","/themes?upload","red"); exit();
 			}
 
-			$Uploader = new upload($_FILES["secondary_picture"]);
+			$Uploader = new Upload($_FILES["secondary_picture"]);
 			$Uploader->file_new_name_body = $URL."_2";
 			$Uploader->image_resize = true;
 			$Uploader->file_overwrite          = true;

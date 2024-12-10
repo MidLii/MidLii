@@ -9,6 +9,8 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
     $Filtered_Search_Query = str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $_GET["q"]);
     $Normal_Search_Query = trim(preg_replace('/[^a-zA-Z0-9\s]/', '', $Filtered_Search_Query));
 
+
+
     if (isset($_GET["f"])) {
         if ($_GET["f"] == 1) {
             $Page_Type = "Videos";
@@ -25,7 +27,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                                         - (videos.1_star))
                                         + (CASE WHEN YEARWEEK(videos.uploaded_on) = YEARWEEK(NOW()) THEN 1 else 0 end) DESC";
             $Videos->LIMIT           = $_PAGINATION;
-            $Videos->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
+            $Videos->Execute         = [":SEARCH" => $Normal_Search_Query];
             $Videos->get();
 
             if ($Videos::$Videos) {
@@ -36,7 +38,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                 $Total->Count           = true;
                 $Total->Blocked         = false;
                 $Total->WHERE_C         = " AND (MATCH (videos.title, videos.description, videos.tags) AGAINST (:SEARCH IN BOOLEAN MODE) OR videos.uploaded_by = :SEARCH OR users.displayname = :SEARCH)";
-                $Total->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
+                $Total->Execute         = [":SEARCH" => $Normal_Search_Query];
                 $Total                  = $Total->get();
 
                 $_PAGINATION->Total = $Total;
@@ -50,25 +52,9 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
 
         } elseif ($_GET["f"] == 2) {
             $Page_Type = "Channels";
-            $Channels = $DB->execute(
-                "SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description 
-                FROM users 
-                WHERE displayname LIKE :USERNAME 
-                AND shadowbanned = 0 
-                LIMIT :from, :to", 
-                false, 
-                [":USERNAME" => "%$Filtered_Search_Query%", ":from" => $_PAGINATION->From, ":to" => $_PAGINATION->To]
-            );
+            $Channels = $DB->execute("SELECT username, displayname, subscribers, video_views, avatar, channel_views, channel_description FROM users WHERE displayname LIKE :USERNAME AND shadowbanned = 0 LIMIT $_PAGINATION->From, $_PAGINATION->To", false, [":USERNAME" => "%$Filtered_Search_Query%"]);
 
-            $Total = $DB->execute(
-                "SELECT COUNT(username) AS amount 
-                FROM users 
-                WHERE shadowbanned = 0 
-                AND displayname LIKE :USERNAME ESCAPE '/'", 
-                true, 
-                [":USERNAME" => "%$Filtered_Search_Query%"]
-            );
-
+            $Total = $DB->execute("SELECT COUNT(username) AS amount FROM users WHERE shadowbanned = 0 AND displayname LIKE :USERNAME ESCAPE '/'", true, [":USERNAME" => "%$Filtered_Search_Query%"])["amount"];
             if ($Total == 0) {
                 notification("No Results!","/"); exit();
             }
@@ -96,7 +82,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                                    - (videos.1_star))
                                    + (CASE WHEN YEARWEEK(videos.uploaded_on) = YEARWEEK(NOW()) THEN 1 else 0 end) DESC";
         $Videos->LIMIT           = $_PAGINATION;
-        $Videos->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
+        $Videos->Execute         = [":SEARCH" => $Normal_Search_Query];
         $Videos->get();
 
         if ($Videos::$Videos) {
@@ -107,7 +93,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
             $Total->Count           = true;
             $Total->Blocked         = false;
             $Total->WHERE_C         = " AND (MATCH (videos.title, videos.description, videos.tags) AGAINST (:SEARCH IN BOOLEAN MODE) OR videos.uploaded_by = :SEARCH OR users.displayname = :SEARCH)";
-            $Total->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
+            $Total->Execute         = [":SEARCH" => $Normal_Search_Query];
             $Total                  = $Total->get();
 
             $_PAGINATION->Total = $Total;

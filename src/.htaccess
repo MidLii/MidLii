@@ -18,3 +18,6 @@ RewriteRule ^cache/ - [R=404,L]
 ErrorDocument 404 /_templates/_errors/404.php
 ErrorDocument 400 /_templates/_errors/400.html
 ErrorDocument 500 /_templates/_errors/500.html
+
+Header always unset X-Powered-By
+Header unset X-Powered-By

@@ -136,17 +136,15 @@ if (isset($_POST["update_avatar"]) || isset($_POST["delete_avatar"])) {
             $Uploader->jpeg_quality            = 55;
             $Uploader->allowed                 = array('image/jpeg','image/pjpeg','image/png','image/gif','image/bmp','image/x-windows-bmp');
             $Uploader->process("usfi/avt/");
-            
             if ($Uploader->processed) {
                 if (file_exists("usfi/avt/$Avatar_FURL.jpg")) {
                     unlink("usfi/avt/$Avatar_FURL.jpg");
                 }
-                $URL = $Uploader->file_dst_name;
                 $DB->modify("UPDATE users SET avatar = :AVATAR WHERE username = :USERNAME",
-                           [
-                               ":AVATAR"    => "u=".$URL,
-                               ":USERNAME"  => $_USER->username
-                           ]);
+                    [
+                        ":AVATAR"    => "u=".$URL,
+                        ":USERNAME"  => $_USER->username
+                    ]);
                 redirect("/channel_setup"); exit();
             }
         } elseif (isset($_POST["delete_avatar"])) {

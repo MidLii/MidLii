@@ -13,13 +13,13 @@ if (isset($_GET["c"],$_GET["o"],$_GET["t"])) {
         $Current_Order = "mv";
     }
 
-    if ($_GET["c"] >= 0 && $_GET["c"] <= 9) {
+    if ((int)$_GET["c"] >= 0 && (int)$_GET["c"] <= 9) {
         $Current_Cat = (int)$_GET["c"];
     } else {
         $Current_Cat = 8;
     }
 
-    if ($_GET["t"] > 0 && $_GET["t"] < 3) {
+    if ((int)$_GET["t"] > 0 && (int)$_GET["t"] < 3) {
         $Current_time = (int)$_GET["t"];
     } else {
         $Current_time = 0; 

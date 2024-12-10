@@ -17,7 +17,7 @@ RUN apt-get update && \
     docker-php-ext-install pdo pdo_mysql && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers 
 
 RUN getent group midlii || addgroup --gid $GID midlii && \
     id -u midlii || adduser --uid $UID --gid $GID --disabled-password --gecos "" midlii && \

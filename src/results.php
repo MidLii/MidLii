@@ -25,7 +25,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                                         - (videos.1_star))
                                         + (CASE WHEN YEARWEEK(videos.uploaded_on) = YEARWEEK(NOW()) THEN 1 else 0 end) DESC";
             $Videos->LIMIT           = $_PAGINATION;
-            $Videos->Execute         = [":SEARCH" => $Normal_Search_Query];
+            $Videos->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
             $Videos->get();
 
             if ($Videos::$Videos) {
@@ -36,7 +36,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                 $Total->Count           = true;
                 $Total->Blocked         = false;
                 $Total->WHERE_C         = " AND (MATCH (videos.title, videos.description, videos.tags) AGAINST (:SEARCH IN BOOLEAN MODE) OR videos.uploaded_by = :SEARCH OR users.displayname = :SEARCH)";
-                $Total->Execute         = [":SEARCH" => $Normal_Search_Query];
+                $Total->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
                 $Total                  = $Total->get();
 
                 $_PAGINATION->Total = $Total;
@@ -96,7 +96,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
                                    - (videos.1_star))
                                    + (CASE WHEN YEARWEEK(videos.uploaded_on) = YEARWEEK(NOW()) THEN 1 else 0 end) DESC";
         $Videos->LIMIT           = $_PAGINATION;
-        $Videos->Execute         = [":SEARCH" => $Normal_Search_Query];
+        $Videos->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
         $Videos->get();
 
         if ($Videos::$Videos) {
@@ -107,7 +107,7 @@ if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
             $Total->Count           = true;
             $Total->Blocked         = false;
             $Total->WHERE_C         = " AND (MATCH (videos.title, videos.description, videos.tags) AGAINST (:SEARCH IN BOOLEAN MODE) OR videos.uploaded_by = :SEARCH OR users.displayname = :SEARCH)";
-            $Total->Execute         = [":SEARCH" => $Normal_Search_Query];
+            $Total->Execute         = [":SEARCH" => "%$Normal_Search_Query%"];
             $Total                  = $Total->get();
 
             $_PAGINATION->Total = $Total;

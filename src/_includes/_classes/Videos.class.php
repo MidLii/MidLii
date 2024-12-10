@@ -100,7 +100,6 @@ class Videos {
 		// DEBUG
         // echo "SELECT $Distinct $this->SELECT FROM videos $this->JOIN $WHERE $this->WHERE_C $ORDER_BY $LIMIT<br><br>";
         // $Videos = $this->DB->execute("SELECT $Distinct $this->SELECT FROM videos $this->JOIN $WHERE $this->WHERE_C $this->Group_By $ORDER_BY $LIMIT",$Single,$this->Execute);
-        die("SELECT $Distinct $this->SELECT FROM videos $this->JOIN $WHERE $this->WHERE_C $this->Group_By $ORDER_BY $LIMIT");
         $Videos = $this->DB->execute("SELECT $Distinct $this->SELECT FROM videos $this->JOIN $WHERE $this->WHERE_C $this->Group_By $ORDER_BY $LIMIT",$Single,$this->Execute);
 
 		static::$Amount = $this->DB->RowNum;

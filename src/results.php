@@ -7,7 +7,7 @@ if (isset($_GET["f"]) && $_GET["f"] == "All") { unset($_GET["f"]); }
 if (isset($_GET["q"]) && strlen($_GET["q"]) >= 2) {
     $_PAGINATION = new Pagination(15,10);
     $Filtered_Search_Query = str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $_GET["q"]);
-    $Normal_Search_Query = trim($Filtered_Search_Query);
+    $Normal_Search_Query = trim(preg_replace('/[^a-zA-Z0-9\s]/', '', $Filtered_Search_Query));
 
     if (isset($_GET["f"])) {
         if ($_GET["f"] == 1) {

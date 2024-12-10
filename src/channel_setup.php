@@ -141,7 +141,7 @@ if (isset($_POST["update_avatar"]) || isset($_POST["delete_avatar"])) {
                 if (file_exists("usfi/avt/$Avatar_FURL.jpg")) {
                     unlink("usfi/avt/$Avatar_FURL.jpg");
                 }
-                $URL = $Uploader->file_src_name;
+                $URL = $Uploader->file_dst_name;
                 die($URL);
                 $DB->modify("UPDATE users SET avatar = :AVATAR WHERE username = :USERNAME",
                            [

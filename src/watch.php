@@ -36,8 +36,7 @@ if ($_VIDEO->exists() !== false) {
     $URL = $_VIDEO->Info["url"];
     $FILENAME = $_VIDEO->Info["file"];
     $ISHD = $_VIDEO->Info["hd"] == 1 ? true : false;
-    // $Title = htmlspecialchars($_VIDEO->Info["title"]);
-    $Title = ($_VIDEO->Info["title"]);
+    $Title = htmlspecialchars($_VIDEO->Info["title"]);
     $Description = htmlspecialchars($_VIDEO->Info["description"]);
     $Tags = explode(",", htmlspecialchars($_VIDEO->Info["tags"]));
     $Category = (int) $_VIDEO->Info["category"];

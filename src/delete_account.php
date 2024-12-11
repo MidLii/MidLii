@@ -3,12 +3,15 @@ require_once "_includes/init.php";
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login
-if (!$_USER->logged_in)         { redirect("/login"); exit(); }
+if (!$_USER->logged_in) {
+	redirect("/login");
+	exit();
+}
 
 //GET INFO
 $Info = $_USER->get_profile();
 if (isset($Info))
-    $Channel_Version = $Info["channel_version"];
+	$Channel_Version = $Info["channel_version"];
 
 //PARSE DATA
 if (isset($_POST["delete_submit"]) || isset($_POST["delete_agree"])) {
@@ -16,24 +19,27 @@ if (isset($_POST["delete_submit"]) || isset($_POST["delete_agree"])) {
 	if ($DB->RowNum > 0) { // Deletion Code already exists
 		$Count = $DB->execute("SELECT issued FROM terminations WHERE username = :USERNAME LIMIT 1", true, [":USERNAME" => $_USER->username])["issued"];
 		$Count = time() - $Count;
-		
+
 		if ($Count > 86400) { // Deletion Code is expired
-			$Count      = $DB->modify("DELETE FROM terminations WHERE username = :USERNAME LIMIT 1", [":USERNAME" => $_USER->username]);
+			$Count = $DB->modify("DELETE FROM terminations WHERE username = :USERNAME LIMIT 1", [":USERNAME" => $_USER->username]);
 			$CodeExists = false;
 		} else {
 			$Count = 86400 - $Count * 2;
-			if ($Count < 60) $Count = "a minute";
-			elseif ($Count < 3600) $Count = (int)($Count / 60) . " minute(s)";
-			else $Count = (int)($Count / 3600) . " hour(s)";
+			if ($Count < 60)
+				$Count = "a minute";
+			elseif ($Count < 3600)
+				$Count = (int) ($Count / 60) . " minute(s)";
+			else
+				$Count = (int) ($Count / 3600) . " hour(s)";
 			$CodeExists = true;
 		}
 	} else { // Deletion Code doesn't exist
 		$CodeExists = false;
 	}
-	
+
 	if ($CodeExists) {
-		$_SESSION["notification"]   = "A termination code has already been sent to your e-mail address,<br>please wait for $Count before trying again.";
-		$_SESSION["n_color"]        = "red";
+		$_SESSION["notification"] = "A termination code has already been sent to your e-mail address,<br>please wait for $Count before trying again.";
+		$_SESSION["n_color"] = "red";
 	}
 }
 
@@ -41,29 +47,31 @@ if (isset($_POST["delete_agree"]) && !$CodeExists) {
 	$phase = 1;
 } elseif (isset($_POST["delete_submit"]) && !$CodeExists) {
 	$phase = 1;
-	
-    $_GUMP->validation_rules(array(
-        "vl_password1"   => "required|max_len,128",
-        "vl_password2"   => "required|max_len,128"
-    ));
 
-    $_GUMP->filter_rules(array(
-        "vl_password1"   => "trim",
-        "vl_password2"   => "trim"
-    ));
-	
+	$_GUMP->validation_rules(array(
+		"vl_password1" => "required|max_len,128",
+		"vl_password2" => "required|max_len,128"
+	));
+
+	$_GUMP->filter_rules(array(
+		"vl_password1" => "trim",
+		"vl_password2" => "trim"
+	));
+
 	$Validation = $_GUMP->run($_POST);
 	if ($Validation && !isTorRequest()) {
-		if ($_USER->check_password($Validation["vl_password1"]) && $Validation["vl_password1"] == $Validation["vl_password2"]) {			
+		if ($_USER->check_password($Validation["vl_password1"]) && $Validation["vl_password1"] == $Validation["vl_password2"]) {
 			$Deletion_Code = random_string("ABCDEFGHIJK123456789abcdefghijklmnop", 25);
-			$DB->modify("INSERT INTO terminations VALUES (:USERNAME,:SECRET,:TIME)",
-                       [
-                           ":USERNAME"  => $_USER->username,
-                           ":SECRET"    => $Deletion_Code,
-                           ":TIME"      => time()
-                       ]);
+			$DB->modify(
+				"INSERT INTO terminations VALUES (:USERNAME,:SECRET,:TIME)",
+				[
+					":USERNAME" => $_USER->username,
+					":SECRET" => $Deletion_Code,
+					":TIME" => time()
+				]
+			);
 			if ($DB->RowNum > 0) {
-//				require_once ROOT_FOLDER."/_includes/_libs/PHPMailerAutoload.php";
+				//				require_once ROOT_FOLDER."/_includes/_libs/PHPMailerAutoload.php";
 //				$mail               = new PHPMailer;
 //				$mail->Host         = 'mail.vidlii.com';
 //				$mail->SMTPAuth     = true;
@@ -93,20 +101,20 @@ if (isset($_POST["delete_agree"]) && !$CodeExists) {
 //					</body>';
 //					
 //				$mail->send();
-				header("Location: /terminate?code=".$Deletion_Code);
+				header("Location: /terminate?code=" . $Deletion_Code);
 				$phase = 2;
 
 			} else {
-				$_SESSION["notification"]   = "An error has occurred while processing your request.";
-				$_SESSION["n_color"]        = "red";
+				$_SESSION["notification"] = "An error has occurred while processing your request.";
+				$_SESSION["n_color"] = "red";
 			}
 		} else {
-			$_SESSION["notification"]   = "Passwords either don't match or are incorrect.";
-			$_SESSION["n_color"]        = "red";
+			$_SESSION["notification"] = "Passwords either don't match or are incorrect.";
+			$_SESSION["n_color"] = "red";
 		}
 	} else {
-		$_SESSION["notification"]   = "An error has occurred while processing your request.";
-		$_SESSION["n_color"]        = "red";
+		$_SESSION["notification"] = "An error has occurred while processing your request.";
+		$_SESSION["n_color"] = "red";
 	}
 } else {
 	$phase = 0;
@@ -116,10 +124,10 @@ if (isset($_POST["delete_agree"]) && !$CodeExists) {
 $Account_Title = "Delete Account";
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Delete Account - VidLii",
-    "Page"              => "Delete",
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+	"Page_Title" => "Delete Account - VidLii",
+	"Page" => "Delete",
+	"Page_Type" => "Home",
+	"Show_Search" => false
 ));
 
 require_once "_templates/settings_structure.php";

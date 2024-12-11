@@ -13,39 +13,43 @@ require_once "_includes/init.php";
 
 if (isset($_POST["submit_suggestion"]) && $_USER->logged_in) {
     $_GUMP->validation_rules(array(
-        "s_title"         => "required|max_len,100",
-        "s_description"   => "required|max_len,1100"
+        "s_title" => "required|max_len,100",
+        "s_description" => "required|max_len,1100"
     ));
 
     $_GUMP->filter_rules(array(
-        "s_title"         => "trim|NoHTML",
-        "s_description"   => "trim|NoHTML"
-    )); 
+        "s_title" => "trim|NoHTML",
+        "s_description" => "trim|NoHTML"
+    ));
 
     $Validation = $_GUMP->run($_POST);
 
     if ($Validation) {
-        $Title       = $Validation["s_title"];
+        $Title = $Validation["s_title"];
         $Description = $Validation["s_description"];
 
         $Feature_Exist = $DB->execute("SELECT id FROM feature_suggestions WHERE from_user = :USERNAME", false, [":USERNAME" => $_USER->username]);
 
         if ($DB->RowNum == 0) {
-            $DB->modify("INSERT INTO feature_suggestions (title,description,from_user) VALUES (:TITLE,:DESCRIPTION,:USERNAME)",
-                       [
-                           ":TITLE"         => $Title,
-                           ":DESCRIPTION"   => $Description,
-                           ":USERNAME"      => $_USER->username
-                       ]);
-            notification("Your suggestion has been added! Thank you.","/community","green"); exit();
+            $DB->modify(
+                "INSERT INTO feature_suggestions (title,description,from_user) VALUES (:TITLE,:DESCRIPTION,:USERNAME)",
+                [
+                    ":TITLE" => $Title,
+                    ":DESCRIPTION" => $Description,
+                    ":USERNAME" => $_USER->username
+                ]
+            );
+            notification("Your suggestion has been added! Thank you.", "/community", "green");
+            exit();
         } else {
-            notification("You can only have one suggestion at once!","/community"); exit();
+            notification("You can only have one suggestion at once!", "/community");
+            exit();
         }
     }
 }
-$Random_Video           = new Videos($DB, $_USER);
-$Random_Video->Blocked  = false;
-$Random_Video->LIMIT    = 1;
+$Random_Video = new Videos($DB, $_USER);
+$Random_Video->Blocked = false;
+$Random_Video->LIMIT = 1;
 
 if (!isset($_GET["v"])) {
 
@@ -57,7 +61,7 @@ if (!isset($_GET["v"])) {
 
 } elseif ($_GET["v"] == "b") {
 
-    $Random_Video->JOIN     = "INNER JOIN recently_viewed ON videos.url = recently_viewed.url";
+    $Random_Video->JOIN = "INNER JOIN recently_viewed ON videos.url = recently_viewed.url";
     $Random_Video->ORDER_BY = "recently_viewed.time_viewed DESC";
 
 } else {
@@ -67,18 +71,19 @@ if (!isset($_GET["v"])) {
 $Random_Video->get();
 $Random_Video = $Random_Video->fixed();
 
-$Status   = is_array($Random_Video) ? $Random_Video["status"] : false;
-$URL      = is_array($Random_Video) ?$Random_Video["url"] : "";
-$FILENAME = is_array($Random_Video) ?$Random_Video["file"]: "";
-$ISHD     = is_array($Random_Video) && $Random_Video["hd"] == 1 ? true : false;
-$Length   = is_array($Random_Video) ?$Random_Video["seconds"] : 1;
+$Status = is_array($Random_Video) ? $Random_Video["status"] : false;
+$URL = is_array($Random_Video) ? $Random_Video["url"] : "";
+$FILENAME = is_array($Random_Video) ? $Random_Video["file"] : "";
+$ISHD = is_array($Random_Video) && $Random_Video["hd"] == 1 ? true : false;
+$Length = is_array($Random_Video) ? $Random_Video["seconds"] : 1;
 $Autoplay = false;
 
 
 if (isset($_COOKIE["player"])) {
 
-	$Player = (int)$_COOKIE["player"];
-	if ($Player < 0 || $Player > 3) $Player = 2;
+    $Player = (int) $_COOKIE["player"];
+    if ($Player < 0 || $Player > 3)
+        $Player = 2;
 
 } else {
 
@@ -88,12 +93,12 @@ if (isset($_COOKIE["player"])) {
 
 
 //RECENTLY FAVORITED VIDEOS
-$Favorites              = new Videos($DB, $_USER);
-$Favorites->ORDER_BY    = "video_favorites.date DESC";
-$Favorites->SELECT     .= ", video_favorites.date";
-$Favorites->JOIN        = "INNER JOIN video_favorites ON videos.url = video_favorites.url";
-$Favorites->LIMIT       = 4;
-$Favorites->Blocked     = false;
+$Favorites = new Videos($DB, $_USER);
+$Favorites->ORDER_BY = "video_favorites.date DESC";
+$Favorites->SELECT .= ", video_favorites.date";
+$Favorites->JOIN = "INNER JOIN video_favorites ON videos.url = video_favorites.url";
+$Favorites->LIMIT = 4;
+$Favorites->Blocked = false;
 $Favorites->get();
 
 $Favorites = $Favorites->fixed();
@@ -106,7 +111,11 @@ $Requests = $DB->execute("SELECT users.avatar, users.displayname, feature_sugges
 
 if ($_USER->logged_in) {
     $Your_Request = $DB->execute("SELECT users.avatar, users.displayname, feature_suggestions.title, feature_suggestions.description, feature_suggestions.from_user FROM feature_suggestions INNER JOIN users ON feature_suggestions.from_user = users.username WHERE feature_suggestions.from_user = :USERNAME", true, [":USERNAME" => $_USER->username]);
-    if ($DB->RowNum == 1) { $Has_Requested = true; } else { $Has_Requested = false; }
+    if ($DB->RowNum == 1) {
+        $Has_Requested = true;
+    } else {
+        $Has_Requested = false;
+    }
 } else {
     $Has_Requested = false;
 }
@@ -116,8 +125,8 @@ $Contest = $DB->execute("SELECT contest_entries.url, videos.title FROM contest_e
 
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Community - VidLii",
-    "Page"              => "Community",
-    "Page_Type"         => "Community"
+    "Page_Title" => "Community - VidLii",
+    "Page" => "Community",
+    "Page_Type" => "Community"
 ));
 require_once "_templates/page_structure.php";

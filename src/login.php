@@ -10,14 +10,17 @@ header("Pragma: no-cache");
 // Check if login is enabled in site settings
 $Sign_In = $DB->execute("SELECT value FROM settings WHERE name = 'login'", true)["value"];
 if ($Sign_In == 0) {
-    notification("Signing in has been temporarily disabled!","/");
+    notification("Signing in has been temporarily disabled!", "/");
     exit();
 }
 
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Being Not Logged In
-if ($_USER->logged_in)         { redirect("/"); exit(); }
+if ($_USER->logged_in) {
+    redirect("/");
+    exit();
+}
 
 // Hash IP address to generate secret
 $ip_hash = base64_encode(md5(user_ip()));
@@ -148,9 +151,9 @@ if (isset($_POST["submit_login"])) {
 }
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Sign In - VidLii",
-    "Page"              => "Login",
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+    "Page_Title" => "Sign In - VidLii",
+    "Page" => "Login",
+    "Page_Type" => "Home",
+    "Show_Search" => false
 ));
 require_once "_templates/page_structure.php";

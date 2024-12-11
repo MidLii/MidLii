@@ -1,3 +1,5 @@
 <?php
-if ($_GET["url"] == "d") { die(); }
+if ($_GET["url"] == "d") {
+    die();
+}
 ?>

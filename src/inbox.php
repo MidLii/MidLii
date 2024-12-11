@@ -4,8 +4,14 @@ require_once "_includes/init.php";
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login
 //- Requires Activation
-if (!$_USER->logged_in)         { redirect("/login"); exit();   }
-if (!$_USER->Is_Activated)    { redirect("/"); exit();        }
+if (!$_USER->logged_in) {
+    redirect("/login");
+    exit();
+}
+if (!$_USER->Is_Activated) {
+    redirect("/");
+    exit();
+}
 
 
 if (!isset($_GET["page"])) {
@@ -14,30 +20,30 @@ if (!isset($_GET["page"])) {
     $Page_Pr = $_GET["page"];
 }
 
-switch($Page_Pr) {
-    case "messages" :
+switch ($Page_Pr) {
+    case "messages":
         $Page = "Messages";
         break;
-    case "comments" :
+    case "comments":
         $Page = "Comments";
         break;
-    case "invites" :
+    case "invites":
         $Page = "Invites";
         break;
-    case "sent" :
+    case "sent":
         $Page = "Sent";
         break;
-    case "responses" :
+    case "responses":
         $Page = "Responses";
         break;
-    case "send_message" :
+    case "send_message":
         $Page = "Send";
         break;
-    default :
+    default:
         $Page = "Messages";
 }
 
-$_PAGINATION = new Pagination(25,100);
+$_PAGINATION = new Pagination(25, 100);
 
 if ($Page == "Messages") {
 
@@ -53,15 +59,18 @@ if ($Page == "Messages") {
 
             if ($DB->RowNum > 0) {
                 foreach ($Inbox as $ID => $Inbox_Highlight) {
-                    $Inbox[$ID]["message"] = preg_replace("/\b($Filtered_Search_Query)\b/i",'<strong>\1</strong>',$Inbox[$ID]["message"]);
-                    $Inbox[$ID]["subject"] = preg_replace("/\b($Filtered_Search_Query)\b/i",'<strong>\1</strong>',$Inbox[$ID]["subject"]);
+                    $Inbox[$ID]["message"] = preg_replace("/\b($Filtered_Search_Query)\b/i", '<strong>\1</strong>', $Inbox[$ID]["message"]);
+                    $Inbox[$ID]["subject"] = preg_replace("/\b($Filtered_Search_Query)\b/i", '<strong>\1</strong>', $Inbox[$ID]["subject"]);
                 }
-                $_PAGINATION->Total = $DB->execute("SELECT count(private_messages.id) as amount FROM private_messages WHERE to_user = :USERNAME AND (private_messages.message LIKE '% $Filtered_Search_Query %' OR private_messages.subject LIKE '% $Filtered_Search_Query %')", true, [":USERNAME" => $_USER->username])["amount"];;
+                $_PAGINATION->Total = $DB->execute("SELECT count(private_messages.id) as amount FROM private_messages WHERE to_user = :USERNAME AND (private_messages.message LIKE '% $Filtered_Search_Query %' OR private_messages.subject LIKE '% $Filtered_Search_Query %')", true, [":USERNAME" => $_USER->username])["amount"];
+                ;
             } else {
-                notification("No messages could be found!","/inbox?page=messages","red"); exit();
+                notification("No messages could be found!", "/inbox?page=messages", "red");
+                exit();
             }
         } elseif (mb_strlen($_POST["search_input"]) < 4) {
-            notification("Your search must be at least 4 characters long!","/inbox?page=messages","red"); exit();
+            notification("Your search must be at least 4 characters long!", "/inbox?page=messages", "red");
+            exit();
         }
     }
 } elseif ($Page == "Comments") {
@@ -73,7 +82,7 @@ if ($Page == "Messages") {
                                   UNION ALL SELECT 'channel' as type_name, channel_comments.id as id, '' as length, channel_comments.comment, channel_comments.by_user, channel_comments.date as date_sent, channel_comments.seen as seen, '' as url, channel_comments.on_channel as title, '' as description, users.avatar, users.displayname, '' as under_type FROM channel_comments INNER JOIN users ON users.username = channel_comments.by_user WHERE channel_comments.on_channel = :USERNAME AND channel_comments.by_user <> :USERNAME AND channel_comments.seen <> 2
                                   ORDER BY date_sent DESC LIMIT $_PAGINATION->From, $_PAGINATION->To", false, [":USERNAME" => $_USER->username]);
 
-        $Total   = $DB->execute("SELECT video_comments.id FROM video_comments INNER JOIN videos ON video_comments.url = videos.url WHERE videos.uploaded_by = :USERNAME AND video_comments.by_user <> :USERNAME AND reply_to = 0
+        $Total = $DB->execute("SELECT video_comments.id FROM video_comments INNER JOIN videos ON video_comments.url = videos.url WHERE videos.uploaded_by = :USERNAME AND video_comments.by_user <> :USERNAME AND reply_to = 0
                                  UNION ALL SELECT mentions.type FROM mentions INNER JOIN video_comments ON video_comments.id = mentions.video INNER JOIN videos ON videos.url = video_comments.url WHERE mentions.username = :USERNAME
                                  UNION ALL SELECT mentions.type FROM mentions INNER JOIN channel_comments ON channel_comments.id = mentions.channel WHERE mentions.username = :USERNAME
                                  UNION ALL SELECT replies.id FROM replies INNER JOIN video_comments ON video_comments.id = replies.id INNER JOIN videos ON videos.url = video_comments.url WHERE replies.for_user = :USERNAME
@@ -88,7 +97,8 @@ if ($Page == "Messages") {
     } elseif ($_GET["t"] == 3) {
         $Inbox = $DB->execute("SELECT 'channel' as type_name, channel_comments.id as id, '' as length, channel_comments.comment, channel_comments.by_user, channel_comments.date as date_sent, channel_comments.seen as seen, '' as url, channel_comments.on_channel as title, '' as description, users.avatar, users.displayname, '' as under_type FROM channel_comments INNER JOIN users ON users.username = channel_comments.by_user WHERE channel_comments.on_channel = :USERNAME AND channel_comments.by_user <> :USERNAME AND channel_comments.seen <> 2 ORDER BY date_sent DESC LIMIT $_PAGINATION->From, $_PAGINATION->To", false, [":USERNAME" => $_USER->username]);
 
-        $_PAGINATION->Total = $DB->execute("SELECT count(id) as amount FROM channel_comments WHERE on_channel = :USERNAME AND by_user <> :USERNAME AND seen <> 2", true, [":USERNAME" => $_USER->username])["amount"];;
+        $_PAGINATION->Total = $DB->execute("SELECT count(id) as amount FROM channel_comments WHERE on_channel = :USERNAME AND by_user <> :USERNAME AND seen <> 2", true, [":USERNAME" => $_USER->username])["amount"];
+        ;
     } elseif ($_GET["t"] == 4) {
         $Inbox = $DB->execute("SELECT 'mention' as type_name, mentions.video as id, videos.length, video_comments.comment, video_comments.by_user, video_comments.date_sent as date_sent, mentions.seen as seen, videos.url, videos.title, videos.description, users.avatar, users.displayname, type as under_type FROM mentions INNER JOIN video_comments ON video_comments.id = mentions.video INNER JOIN videos ON videos.url = video_comments.url INNER JOIN users ON users.username = video_comments.by_user WHERE mentions.username = :USERNAME AND mentions.seen <> 2 UNION ALL SELECT 'mention' as type_name, mentions.channel as id, '' as length, channel_comments.comment, channel_comments.by_user, channel_comments.date as date_sent, mentions.seen as seen, '' as url, channel_comments.on_channel as title, '' as description, users.avatar, users.displayname, type as under_type FROM mentions INNER JOIN channel_comments ON channel_comments.id = mentions.channel INNER JOIN users ON users.username = channel_comments.by_user WHERE mentions.username = :USERNAME AND mentions.seen <> 2 ORDER BY date_sent DESC LIMIT $_PAGINATION->From, $_PAGINATION->To", false, [":USERNAME" => $_USER->username]);
 
@@ -124,15 +134,15 @@ if ($Page == "Messages") {
     }
     if (isset($_POST["send_message"])) {
         $_GUMP->validation_rules(array(
-            "to_user"         => "required|alpha_numeric|max_len,21",
-            "subject"         => "required|max_len,256|min_len,1",
-            "message"         => "required|max_len,5000|min_len,1"
+            "to_user" => "required|alpha_numeric|max_len,21",
+            "subject" => "required|max_len,256|min_len,1",
+            "message" => "required|max_len,5000|min_len,1"
         ));
 
         $_GUMP->filter_rules(array(
-            "to_user"         => "trim",
-            "subject"         => "trim",
-            "message"         => "trim"
+            "to_user" => "trim",
+            "subject" => "trim",
+            "message" => "trim"
         ));
 
         $Validation = $_GUMP->run($_POST);
@@ -141,39 +151,46 @@ if ($Page == "Messages") {
             $To_User = $Validation["to_user"];
             $Subject = $Validation["subject"];
             $Message = $Validation["message"];
-			
-            $Get_User = $DB->execute("SELECT username, can_message FROM users WHERE displayname = :USERNAME", true, [":USERNAME" => $To_User]);
-			if ($DB->RowNum == 1) {
-				$To_User = $Get_User["username"];
-				
-				if ($Get_User["can_message"] == 1) {
-					$Blocked = $DB->execute("SELECT blocker, blocked FROM users_block WHERE (blocker = :USERNAME AND blocked = :TO_USER) OR (blocker = :TO_USER AND blocked = :USERNAME)", false, [":USERNAME" => $_USER->username, ":TO_USER" => $To_User]);
 
-					if ($DB->RowNum == 0) {
-						$count = $DB->execute("SELECT count(*) as amount FROM private_messages INNER JOIN users ON users.username = private_messages.from_user WHERE users.username = :USERNAME AND private_messages.date_sent >= date_sub(now(), interval 10 minute)", true, [":USERNAME" => $_USER->username])["amount"];
-						if ($count < 7) {
-						$DB->modify("INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES (:FROM,:TO,:MESSAGE,:SUBJECT,NOW())",
-								   [
-									   ":FROM"      => $_USER->username,
-									   ":TO"        => $To_User,
-									   ":MESSAGE"   => $Message,
-									   ":SUBJECT"   => $Subject
-								   ]);
-						}
-						if ($DB->RowNum == 1) {
-							notification("Message successfully sent!","/inbox","green"); exit();
-						} else {
-							notification("Something went wrong!","/inbox","red"); exit();
-						}
-					} else {
-						notification("You cannot interact with this user!", "/inbox?page=send_message", "red"); exit();
-					}
-				} else {
-					notification("This user has disabled private messaging.", "/inbox?page=send_message", "red"); exit();
-				}
-			} else {
-				notification("This user doesn't exist", "/inbox?page=send_message", "red"); exit();
-			}
+            $Get_User = $DB->execute("SELECT username, can_message FROM users WHERE displayname = :USERNAME", true, [":USERNAME" => $To_User]);
+            if ($DB->RowNum == 1) {
+                $To_User = $Get_User["username"];
+
+                if ($Get_User["can_message"] == 1) {
+                    $Blocked = $DB->execute("SELECT blocker, blocked FROM users_block WHERE (blocker = :USERNAME AND blocked = :TO_USER) OR (blocker = :TO_USER AND blocked = :USERNAME)", false, [":USERNAME" => $_USER->username, ":TO_USER" => $To_User]);
+
+                    if ($DB->RowNum == 0) {
+                        $count = $DB->execute("SELECT count(*) as amount FROM private_messages INNER JOIN users ON users.username = private_messages.from_user WHERE users.username = :USERNAME AND private_messages.date_sent >= date_sub(now(), interval 10 minute)", true, [":USERNAME" => $_USER->username])["amount"];
+                        if ($count < 7) {
+                            $DB->modify(
+                                "INSERT INTO private_messages (from_user,to_user,message,subject,date_sent) VALUES (:FROM,:TO,:MESSAGE,:SUBJECT,NOW())",
+                                [
+                                    ":FROM" => $_USER->username,
+                                    ":TO" => $To_User,
+                                    ":MESSAGE" => $Message,
+                                    ":SUBJECT" => $Subject
+                                ]
+                            );
+                        }
+                        if ($DB->RowNum == 1) {
+                            notification("Message successfully sent!", "/inbox", "green");
+                            exit();
+                        } else {
+                            notification("Something went wrong!", "/inbox", "red");
+                            exit();
+                        }
+                    } else {
+                        notification("You cannot interact with this user!", "/inbox?page=send_message", "red");
+                        exit();
+                    }
+                } else {
+                    notification("This user has disabled private messaging.", "/inbox?page=send_message", "red");
+                    exit();
+                }
+            } else {
+                notification("This user doesn't exist", "/inbox?page=send_message", "red");
+                exit();
+            }
         }
     }
 }
@@ -186,16 +203,16 @@ if ($Page == "Messages") {
     $Inbox_Title = "Friend Invitations";
 } elseif ($Page == "Responses") {
     $Inbox_Title = "Video Responses";
-}elseif ($Page == "Send") {
+} elseif ($Page == "Send") {
     $Inbox_Title = "Send Message";
 } else {
     $Inbox_Title = "Sent Messages";
 }
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "$Inbox_Title - VidLii",
-    "Page"              => $Page,
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+    "Page_Title" => "$Inbox_Title - VidLii",
+    "Page" => $Page,
+    "Page_Type" => "Home",
+    "Show_Search" => false
 ));
 require_once "_templates/inbox_structure.php";

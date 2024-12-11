@@ -5,9 +5,9 @@ $Help = $DB->execute("SELECT value FROM settings WHERE name = 'help'", true)["va
 
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Help - VidLii",
-    "Page"              => "Help",
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+    "Page_Title" => "Help - VidLii",
+    "Page" => "Help",
+    "Page_Type" => "Home",
+    "Show_Search" => false
 ));
 require_once "_templates/page_structure.php";

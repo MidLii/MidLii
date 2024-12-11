@@ -3,7 +3,10 @@ require_once "_includes/init.php";
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login
-if (!$_USER->logged_in)         { redirect("/login"); exit(); }
+if (!$_USER->logged_in) {
+    redirect("/login");
+    exit();
+}
 
 
 if (isset($_POST["switch_1"])) {
@@ -59,9 +62,10 @@ if (isset($_POST["switch_1"])) {
             chn_radius = 0
             WHERE username = :USERNAME
             ",
-            [
-                ":USERNAME" => $_USER->username
-            ]);
+        [
+            ":USERNAME" => $_USER->username
+        ]
+    );
     $Background = @glob("usfi/bg/$_USER->username.*")[0];
     @unlink($Background);
     @unlink("usfi/bner/$_USER->username.png");
@@ -122,9 +126,10 @@ if (isset($_POST["switch_2"])) {
             chn_radius = 5
             WHERE username = :USERNAME
             ",
-            [
-                ":USERNAME" => $_USER->username
-            ]);
+        [
+            ":USERNAME" => $_USER->username
+        ]
+    );
     $Background = @glob("usfi/bg/$_USER->username.*")[0];
     @unlink($Background);
     @unlink("usfi/bner/$_USER->username.png");
@@ -183,9 +188,10 @@ if (isset($_POST["switch_3"])) {
             chn_radius = 5
             WHERE username = :USERNAME
             ",
-            [
-                ":USERNAME" => $_USER->username
-            ]);
+        [
+            ":USERNAME" => $_USER->username
+        ]
+    );
     $Background = @glob("usfi/bg/$_USER->username.*")[0];
     @unlink($Background);
     @unlink("usfi/bner/$_USER->username.png");
@@ -197,16 +203,16 @@ if (isset($_POST["switch_3"])) {
 $Info = $_USER->get_profile();
 
 
-$Channel_Version    = $Info["channel_version"];
+$Channel_Version = $Info["channel_version"];
 
 
-$Account_Title      = "Channel Version";
+$Account_Title = "Channel Version";
 
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Channel Version - VidLii",
-    "Page"              => "Layout",
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+    "Page_Title" => "Channel Version - VidLii",
+    "Page" => "Layout",
+    "Page_Type" => "Home",
+    "Show_Search" => false
 ));
 require_once "_templates/settings_structure.php";

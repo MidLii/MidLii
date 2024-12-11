@@ -3,7 +3,10 @@ require_once "_includes/init.php";
 
 //REQUIREMENTS / PERMISSIONS
 //- Requires Login
-if (!$_USER->logged_in)         { redirect("/login"); exit(); }
+if (!$_USER->logged_in) {
+    redirect("/login");
+    exit();
+}
 
 
 $_USER->get_profile();
@@ -29,9 +32,9 @@ $Comments = $DB->execute("SELECT count(*) as amount FROM video_comments WHERE by
 
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "My Account - VidLii",
-    "Page"              => "my_account",
-    "Page_Type"         => "Home",
-    "Show_Search"       => false
+    "Page_Title" => "My Account - VidLii",
+    "Page" => "my_account",
+    "Page_Type" => "Home",
+    "Show_Search" => false
 ));
 require_once "_templates/settings_structure.php";

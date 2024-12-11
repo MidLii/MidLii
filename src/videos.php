@@ -3,10 +3,10 @@ require_once "_includes/init.php";
 
 $Categories = return_categories();
 $Header = array("re" => "Newest", "mv" => "Most Viewed", "md" => "Most Discussed", "tr" => "Top Rated");
-$_PAGINATION = new Pagination(16,20);
+$_PAGINATION = new Pagination(16, 20);
 
 
-if (isset($_GET["c"],$_GET["o"],$_GET["t"])) {
+if (isset($_GET["c"], $_GET["o"], $_GET["t"])) {
     if ($_GET["o"] == "re" || $_GET["o"] == "mv" || $_GET["o"] == "md" || $_GET["o"] == "tr") {
         $Current_Order = $_GET["o"];
     } else {
@@ -14,13 +14,13 @@ if (isset($_GET["c"],$_GET["o"],$_GET["t"])) {
     }
 
     if ($_GET["c"] > 0 && $_GET["c"] < 16) {
-        $Current_Cat = (int)$_GET["c"];
+        $Current_Cat = (int) $_GET["c"];
     } else {
         $Current_Cat = 0;
     }
 
     if ($_GET["t"] > 0 && $_GET["t"] < 4) {
-        $Current_time = (int)$_GET["t"];
+        $Current_time = (int) $_GET["t"];
     } else {
         $Current_time = 0;
     }
@@ -58,10 +58,10 @@ if ($Current_time == 0) {
 }
 
 
-$Videos          = new Videos($DB, $_USER);
+$Videos = new Videos($DB, $_USER);
 $Videos->Blocked = false;
 $Videos->WHERE_C = " AND $WHERE";
-$Videos->LIMIT   = $_PAGINATION;
+$Videos->LIMIT = $_PAGINATION;
 
 if ($Current_Order !== "md") {
 
@@ -69,9 +69,9 @@ if ($Current_Order !== "md") {
 
 } else {
 
-    $Videos->Distinct   = true;
-    $Videos->JOIN       = "INNER JOIN video_comments ON videos.url = video_comments.url";
-    $Videos->ORDER_BY   = "(SELECT count(DISTINCT video_comments.by_user) as amount FROM video_comments WHERE video_comments.url = videos.url) DESC";
+    $Videos->Distinct = true;
+    $Videos->JOIN = "INNER JOIN video_comments ON videos.url = video_comments.url";
+    $Videos->ORDER_BY = "(SELECT count(DISTINCT video_comments.by_user) as amount FROM video_comments WHERE video_comments.url = videos.url) DESC";
 
 }
 
@@ -80,19 +80,19 @@ $Videos->get();
 $Videos = $Videos->fixed();
 
 
-$Video_Amount           = new Videos($DB, $_USER);
-$Video_Amount->LIMIT    = 320;
-$Video_Amount->WHERE_C  = " AND $WHERE";
+$Video_Amount = new Videos($DB, $_USER);
+$Video_Amount->LIMIT = 320;
+$Video_Amount->WHERE_C = " AND $WHERE";
 $Video_Amount->Uploader = true;
-$Video_Amount->Blocked  = false;
-$Video_Amount->Count    = true;
+$Video_Amount->Blocked = false;
+$Video_Amount->Count = true;
 
 $_PAGINATION->Total = $Video_Amount->get();
 
 
 $_PAGE->set_variables(array(
-    "Page_Title"        => "Videos - VidLii",
-    "Page"              => "Videos",
-    "Page_Type"         => "Videos"
+    "Page_Title" => "Videos - VidLii",
+    "Page" => "Videos",
+    "Page_Type" => "Videos"
 ));
 require_once "_templates/page_structure.php";

@@ -92,7 +92,8 @@
 <div class="h_r">
 </div>
 <div class="h_r">
-    <!--<div class="wdg">
+    <? if (false) : ?>
+    <div class="wdg">
         <div style="height:23px"><span>Support VidLii</span></div>
         <div style="text-align:center">
             <div style="font-size:13px;margin:0 0 5px"><strong>Donate</strong> to let us be able to improve video quality and add more awesome features</div>
@@ -110,9 +111,11 @@
             <div style="margin-bottom:3px">Or <strong>donate bitcoin directly</strong>:</div>
             <strong style="display:block">17CTYVZhsBiySwf4sAtGUPVt1<br>SuW7vkt5X</strong>
         </div>
-    </div>-->
-<!--<iframe src="https://discord.com/widget?id=754064080255451153&theme=dark" width="320" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>-->
-<a class="twitter-timeline" data-height="600" data-dnt="true" href="https://twitter.com/VidLii">Tweets by VidLii</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <iframe src="https://discord.com/widget?id=754064080255451153&theme=dark" width="320" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    <a class="twitter-timeline" data-height="600" data-dnt="true" href="https://twitter.com/VidLii">Tweets by VidLii</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <? endif ?>
+
 	<? if (1 == 2) : ?>
     <div class="wdg">
         <div style="height:23px;background:#d4c9fb"><span>Current #1 in Contest</span></div>
